@@ -86,12 +86,16 @@ class Mail {
             if (res.status == 429 || res.status == 403) {
                 await db.nextAccount(authAccount.email)
             }
-            return res
+            return {
+                status: res.status,
+                data: res.data
+            }
         }
         catch(err) {
             await db.nextAccount(authAccount.email)
             return {
                 status: 500,
+                data: {},
                 error: err
             }
         }
